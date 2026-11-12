@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8f6">
+  <meta name="description" content="META bilan g'oyalarni birlashtiring, ishni soddalashtiring va keyingi qadamni ishonch bilan qadam qo'ying.">
+  <title>META — G'oyalar birlashganda</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17231d;
+      --muted: #66736b;
+      --green: #245c43;
+      --green-dark: #194430;
+      --lime: #d7f36a;
+      --paper: #f7f8f6;
+      --line: #e5e9e4;
+      --white: #fff;
+      --radius: 24px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .wrap { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+    .nav { height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-size: 19px; font-weight: 800; letter-spacing: -.06em; }
+    .brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; background: var(--green); color: var(--lime); font-size: 18px; letter-spacing: -.08em; }
+    .nav-links { display: flex; align-items: center; gap: 34px; color: #536159; font-size: 14px; }
+    .nav-links a:hover, .footer-links a:hover { color: var(--green); }
+    .button { border: 0; border-radius: 999px; padding: 14px 21px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--green); color: white; font-size: 14px; font-weight: 650; transition: transform .2s, background .2s; cursor: pointer; }
+    .button:hover { background: var(--green-dark); transform: translateY(-2px); }
+    .button.light { background: var(--lime); color: var(--ink); }
+    .button.light:hover { background: #e3ff83; }
+    .button.outline { background: transparent; color: var(--ink); border: 1px solid #dce2dc; }
+    .button.outline:hover { background: white; }
+    .hero { display: grid; grid-template-columns: 1.03fr .97fr; align-items: center; gap: 58px; padding: 65px 0 94px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--green); font-size: 12px; font-weight: 750; text-transform: uppercase; letter-spacing: .12em; }
+    .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #82ad59; }
+    h1 { margin: 19px 0 21px; max-width: 610px; font-size: clamp(48px, 6.4vw, 78px); line-height: .99; letter-spacing: -.075em; font-weight: 650; }
+    h1 span { color: var(--green); }
+    .hero-copy { max-width: 480px; color: var(--muted); font-size: 17px; line-height: 1.75; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .social-proof { display: flex; align-items: center; gap: 13px; margin-top: 40px; color: var(--muted); font-size: 12px; }
+    .avatars { display: flex; padding-left: 5px; }
+    .avatar { width: 30px; height: 30px; margin-left: -5px; border: 2px solid var(--paper); border-radius: 50%; display: grid; place-items: center; background: #dce9d8; color: var(--green); font-size: 10px; font-weight: 700; }
+    .avatar:nth-child(2) { background: #efdbc8; color: #7f4b2b; }
+    .avatar:nth-child(3) { background: #e3dcf4; color: #55427d; }
+    .avatar:nth-child(4) { background: #f3e7ad; color: #77651f; }
+    .hero-visual { position: relative; min-height: 470px; display: grid; place-items: center; }
+    .glow { position: absolute; width: 360px; height: 360px; border-radius: 50%; background: #e3ebd8; filter: blur(1px); }
+    .orbit { position: absolute; width: 420px; height: 420px; border: 1px solid #d9e3d4; border-radius: 50%; transform: rotate(-24deg) scaleY(.66); }
+    .orbit::before, .orbit::after { content: ""; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: #9ab77e; }
+    .orbit::before { top: 18%; left: 16%; }
+    .orbit::after { bottom: 8%; right: 24%; background: #e2b95b; }
+    .visual-card { position: relative; width: min(365px, 82%); padding: 23px; border: 1px solid rgba(255,255,255,.86); border-radius: 28px; background: rgba(255,255,255,.8); box-shadow: 0 28px 75px rgba(34,66,45,.13); backdrop-filter: blur(12px); transform: rotate(-3deg); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 12px; }
+    .dots { display: flex; gap: 4px; }
+    .dots i { width: 6px; height: 6px; border-radius: 50%; background: #d2d9d2; }
+    .visual-card h3 { margin: 28px 0 6px; font-size: 20px; letter-spacing: -.04em; }
+    .visual-card p { margin: 0; color: var(--muted); font-size: 12px; }
+    .progress { height: 8px; border-radius: 99px; margin: 20px 0 8px; background: #edf0ec; overflow: hidden; }
+    .progress span { display: block; width: 72%; height: 100%; border-radius: inherit; background: #79a96c; }
+    .progress-meta { display: flex; justify-content: space-between; color: #758078; font-size: 10px; }
+    .task { display: flex; align-items: center; gap: 11px; padding: 13px 0; border-bottom: 1px solid #edf0ec; font-size: 12px; }
+    .check { width: 17px; height: 17px; border: 1px solid #c8d6c6; border-radius: 6px; display: grid; place-items: center; color: var(--green); font-size: 11px; }
+    .task:last-child { border-bottom: 0; padding-bottom: 3px; }
+    .floating { position: absolute; display: flex; align-items: center; gap: 10px; padding: 12px 15px; border-radius: 15px; background: white; box-shadow: 0 12px 34px rgba(31,59,39,.12); font-size: 11px; font-weight: 650; }
+    .floating.one { top: 55px; right: 0; transform: rotate(4deg); }
+    .floating.two { bottom: 55px; left: 0; transform: rotate(-5deg); }
+    .float-icon { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; background: #eef5df; color: var(--green); font-size: 15px; }
+    .section { padding: 86px 0; }
+    .section-head { max-width: 630px; margin: 0 auto 42px; text-align: center; }
+    .section h2 { margin: 14px 0; font-size: clamp(34px, 4vw, 48px); line-height: 1.08; letter-spacing: -.065em; font-weight: 620; }
+    .section-head p { color: var(--muted); line-height: 1.7; font-size: 15px; }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .feature { min-height: 220px; padding: 27px; border: 1px solid var(--line); border-radius: var(--radius); background: white; }
+    .feature-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px; background: #edf4e7; color: var(--green); font-size: 20px; }
+    .feature h3 { margin: 25px 0 9px; font-size: 18px; letter-spacing: -.035em; }
+    .feature p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .band { margin: 24px 0 88px; padding: 56px 60px; display: flex; align-items: center; justify-content: space-between; gap: 28px; border-radius: 30px; background: var(--green); color: white; overflow: hidden; position: relative; }
+    .band::after { content: ""; position: absolute; width: 270px; height: 270px; right: 22%; top: -160px; border: 1px solid rgba(255,255,255,.16); border-radius: 50%; box-shadow: 0 0 0 35px rgba(255,255,255,.035), 0 0 0 70px rgba(255,255,255,.025); }
+    .band h2 { position: relative; z-index: 1; margin: 0; max-width: 520px; font-size: clamp(30px, 4vw, 44px); line-height: 1.08; letter-spacing: -.06em; font-weight: 600; }
+    .band .button { position: relative; z-index: 1; white-space: nowrap; }
+    footer { border-top: 1px solid var(--line); padding: 27px 0 34px; }
+    .footer-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; color: var(--muted); font-size: 12px; }
+    .footer-links { display: flex; gap: 22px; }
+    .menu-toggle { display: none; border: 0; background: none; color: var(--ink); font-size: 23px; cursor: pointer; }
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; gap: 15px; padding: 48px 0 60px; }
+      .hero-visual { min-height: 420px; }
+      .features { grid-template-columns: 1fr; }
+      .feature { min-height: auto; }
+      .band { padding: 42px 32px; align-items: flex-start; flex-direction: column; }
+      .nav-links { gap: 20px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 32px, 1160px); }
+      .nav { height: 70px; }
+      .menu-toggle { display: block; }
+      .nav-links { display: none; position: absolute; z-index: 5; top: 62px; left: 16px; right: 16px; padding: 20px; border: 1px solid var(--line); border-radius: 18px; background: white; box-shadow: 0 15px 35px #17231d12; flex-direction: column; align-items: stretch; }
+      .nav-links.open { display: flex; }
+      .nav-links .button { width: 100%; }
+      .nav > .button { display: none; }
+      h1 { font-size: clamp(47px, 13vw, 66px); }
+      .hero-copy { font-size: 15px; }
+      .hero-visual { min-height: 370px; }
+      .glow { width: 290px; height: 290px; }
+      .orbit { width: 340px; height: 340px; }
+      .visual-card { padding: 19px; }
+      .floating.one { right: -3px; top: 28px; }
+      .floating.two { left: -3px; bottom: 26px; }
+      .section { padding: 62px 0; }
+      .band { margin-bottom: 60px; padding: 34px 25px; }
+      .footer-row { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <nav class="nav" aria-label="Asosiy navigatsiya">
+      <a class="brand" href="#top" aria-label="META bosh sahifa"><span class="brand-mark">M</span> META</a>
+      <div class="nav-links" id="navLinks">
+        <a href="#haqqimizda">Biz haqimizda</a>
+        <a href="#imkoniyatlar">Imkoniyatlar</a>
+        <a href="#aloqa">Aloqa</a>
+        <a class="button" href="#aloqa">Boshlaymiz <span aria-hidden="true">↗</span></a>
+      </div>
+      <a class="button" href="#aloqa">Boshlaymiz <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menyuni ochish" aria-expanded="false">☰</button>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="wrap hero" id="haqqimizda">
+      <div>
+        <div class="eyebrow">G'oyadan natijaga</div>
+        <h1>G'oyalaringiz uchun <span>yana ko'proq</span> joy.</h1>
+        <p class="hero-copy">Ishingizni, rejalaringizni va jamoangizni bir joyga yig'ing. META bilan kundalik tartibsizlikni aniq bosqichlarga aylantirib, muhim ishga e'tibor qarating.</p>
+        <div class="hero-actions">
+          <a class="button" href="#imkoniyatlar">Kashf etishni boshlang <span aria-hidden="true">↗</span></a>
+          <a class="button outline" href="#haqqimizda">Batafsil</a>
+        </div>
+        <div class="social-proof">
+          <div class="avatars" aria-hidden="true"><span class="avatar">A</span><span class="avatar">L</span><span class="avatar">N</span><span class="avatar">+</span></div>
+          <span>Yaxshi g'oyalar birga rivojlanadi</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="META platformasi qo'llanmasi vizualizatsiyasi">
+        <div class="glow"></div>
+        <div class="orbit"></div>
+        <div class="floating one"><span class="float-icon">✦</span><span>Yangi g'oya qo'shildi</span></div>
+        <div class="visual-card">
+          <div class="card-top"><span>Ish maydoni</span><span class="dots"><i></i><i></i><i></i></span></div>
+          <h3>Bu hafta rejasi</h3>
+          <p>Diqqatni qadam-qadam oldinga yo'naltiring.</p>
+          <div class="progress"><span></span></div>
+          <div class="progress-meta"><span>Rivojlanish</span><span>72%</span></div>
+          <div class="task"><span class="check">✓</span><span>Prioritetlarni aniqlash</span></div>
+          <div class="task"><span class="check">✓</span><span>Jamoa bilan bo'lishish</span></div>
+          <div class="task"><span class="check"></span><span>Keyingi qadamni rejalashtirish</span></div>
+        </div>
+        <div class="floating two"><span class="float-icon">↗</span><span>Hammasi bir joyda</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="imkoniyatlar">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Oddiy. Aniq. Birgalikda.</div>
+          <h2>Ushbu ishni boshlovchi barcha imkoniyatlar.</h2>
+          <p>Kundalik ishlarni osonlashtiruvchi, diqqatni saqlovchi va jamoaviy ishni qulayroq qiladigan muhit.</p>
+        </div>
+        <div class="features">
+          <article class="feature"><div class="feature-icon" aria-hidden="true">⌘</div><h3>Bitta joyda</h3><p>Vazifalar, yozuvlar va g'oyalarni tarqoq vositalardan chiqarib, bir joyga jamlang.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">✳</div><h3>Yashil fokus</h3><p>Muqim ishlarni tanlang, keyingi qadamni ko'ring va energiyangizni haqiqatan maqsadga xizmat qiladigan ishga yo'naltiring.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">↗</div><h3>Birga rivojlanish</h3><p>Jamoangiz bilan rejalarni baham ko'ring, yangiliklardan xabardor bo'ling va ishlarni bir yo'nalishda olib boring.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap band" id="aloqa">
+      <h2>Keyingi ajoyib g'oya aynan shu joydan boshlanadi.</h2>
+      <a class="button light" href="mailto:hello@meta.example">Biz bilan bog'laning <span aria-hidden="true">↗</span></a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <a class="brand" href="#top"><span class="brand-mark">M</span> META</a>
+      <span>© <span id="year"></span> META. Barcha huquqlar himoyalangan.</span>
+      <div class="footer-links"><a href="#haqqimizda">Biz haqimizda</a><a href="#imkoniyatlar">Imkoniyatlar</a><a href="mailto:hello@meta.example">Aloqa</a></div>
+    </div>
+  </footer>
+  <script>
+    const toggle = document.getElementById('menuToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      const isOpen = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Menyuni yopish' : 'Menyuni ochish');
+    });
+    links.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
